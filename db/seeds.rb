@@ -74,11 +74,14 @@ user = User.create(
   roles: [Role.find_by_name("admin")],
 )
 
-Employee.new(
-  user_id: user.id,
+employee = Employee.create(
+  user: user,
   firstname: "Admin",
   lastname: "User",
-  directorate_id: Directorate.find_by_name("Finance & Administration").id,
+  directorate: Directorate.find_by_name("Finance & Administration"),
+  position: Position.find_by_name("HR Manager"),
 )
+
+puts employee.errors.to_json
 
 puts "Your new user is: admin@baobabhealth.com, password: test"
