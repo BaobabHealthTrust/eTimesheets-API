@@ -68,7 +68,7 @@ roles.each do |name, description|
   Role.create(name: name, :description => description)
 end
 
-user = User.create(email: "admin@baobabhealth.com", password_digest: "test")
+user = User.create(email: "admin@baobabhealth.com", password: "test")
 
 Employee.new(
   user_id: user.id,
