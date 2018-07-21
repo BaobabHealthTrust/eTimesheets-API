@@ -22,6 +22,8 @@ gem 'simple_command'
 
 gem 'passenger'
 
+gem 'csv'
+
 # Use ActiveStorage variant
 # gem 'mini_magick', '~> 4.8'
 
