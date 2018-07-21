@@ -1,0 +1,2 @@
+class Directorate < ApplicationRecord
+end

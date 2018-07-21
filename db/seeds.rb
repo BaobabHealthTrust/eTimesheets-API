@@ -33,7 +33,7 @@ departments = [
 departments.each do |department, directorate|
   Department.create(
     department: department,
-    directorate: Directorates.find_by_name(directorate)[0],
+    directorate: Directorate.find_by_name(directorate)[0],
   )
 end
 
