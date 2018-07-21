@@ -14,7 +14,7 @@ directorates = [
 ]
 
 directorates.each do |directorate|
-  Directorate.create(name: directorate)
+  Directorate.create(name: directorate).errors
 end
 
 departments = [
@@ -31,9 +31,10 @@ departments = [
 ]
 
 departments.each do |department, directorate|
+  puts "Creating departments: name => #{department}, directorate => #{directorate}"
   Department.create(
-    department: department,
-    directorate: Directorate.find_by_name(directorate)[0],
+    name: department,
+    directorate_id: Directorate.find_by_name(directorate).id,
   )
 end
 
@@ -54,7 +55,7 @@ CSV.foreach("#{Rails.root}/app/assets/data/projects.csv", headers: true, encodin
   puts "Creating projects: #{row[0]}"
   Project.create(
     name: row[0],
-    donor: Donor.find_by_abbreviation(row[1])[0],
+    donor_id: Donor.find_by_abbreviation(row[1]).id,
   )
 end
 
@@ -63,23 +64,22 @@ roles = [
   ["standard", "A standard user"],
 ]
 
-roles.each do |r, desc|
-  Role.create(:role => r, :description => desc)
+roles.each do |name, description|
+  Role.create(name: name, :description => description)
 end
 
-user = User.create(
-  username: "admin",
-  password_hash: "test",
-  employee: Employee.create(
-    first_name: "Admin",
-    last_name: "User",
-    directorate: Directorate.find_by_name("Finance & Admin")[0],
-  ),
+user = User.create(email: "admin@baobabhealth.com", password_digest: "test")
+
+Employee.new(
+  user_id: user.id,
+  firstname: "Admin",
+  lastname: "User",
+  directorate_id: Directorate.find_by_name("Finance & Administration").id,
 )
 
 user_role = UserRole.create(
   :user_id => user.id,
-  :role => Role.find_by_name("admin"),
+  :role_id => Role.find_by_name("admin").id,
 )
 
-puts "Your new user is: admin, password: test"
+puts "Your new user is: admin@baobabhealth.com, password: test"
