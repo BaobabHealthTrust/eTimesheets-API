@@ -15,13 +15,33 @@ class Api::V1::TimesheetsController < ApplicationController
 
   # POST /timesheets
   def create
-    @timesheet = Timesheet.new(timesheet_params)
+    # Check if any required parameters are missing
+    errors = ValidateParameters.add_timesheet(params)
 
-    if @timesheet.save
-      render json: @timesheet, status: :created, location: @timesheet
-    else
-      render json: @timesheet.errors, status: :unprocessable_entity
+    unless errors.blank?
+      render plain: errors.to_json and return
     end
+
+    if current_user.blank?
+      msg = {status: 401, message: "User not found"}
+      render plain: msg.to_json and return
+    end
+    employee    = Employee.find_by_user_id(current_user.id)
+    start_date  = params[:start_date]
+    end_date    = params[:end_date]
+
+    timesheet = Timesheet.create(
+      employee_id:  employee.id,
+      start_date:   start_date,
+      end_date:     end_date,
+    )
+
+    if !timesheet.blank?
+      render plain: timesheet.to_json
+    else
+      render plain: timesheet.errors.to_json
+    end
+
   end
 
   # PATCH/PUT /timesheets/1
