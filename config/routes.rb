@@ -10,8 +10,7 @@ Rails.application.routes.draw do
       resources :employees
       resources :directors
       resources :positions
-      resources :user_roles
-      resources :roles
+          resources :roles
       resources :users
     end
   end
