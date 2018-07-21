@@ -1,4 +1,4 @@
-class UserRolesController < ApplicationController
+class Api::V1::UserRolesController < ApplicationController
   before_action :set_user_role, only: [:show, :update, :destroy]
 
   # GET /user_roles
@@ -39,13 +39,14 @@ class UserRolesController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_user_role
-      @user_role = UserRole.find(params[:id])
-    end
 
-    # Only allow a trusted parameter "white list" through.
-    def user_role_params
-      params.fetch(:user_role, {})
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_user_role
+    @user_role = UserRole.find(params[:id])
+  end
+
+  # Only allow a trusted parameter "white list" through.
+  def user_role_params
+    params.fetch(:user_role, {})
+  end
 end

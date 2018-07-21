@@ -1,4 +1,4 @@
-class DonorsController < ApplicationController
+class Api::V1::DonorsController < ApplicationController
   before_action :set_donor, only: [:show, :update, :destroy]
 
   # GET /donors
@@ -39,13 +39,14 @@ class DonorsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_donor
-      @donor = Donor.find(params[:id])
-    end
 
-    # Only allow a trusted parameter "white list" through.
-    def donor_params
-      params.fetch(:donor, {})
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_donor
+    @donor = Donor.find(params[:id])
+  end
+
+  # Only allow a trusted parameter "white list" through.
+  def donor_params
+    params.fetch(:donor, {})
+  end
 end

@@ -1,4 +1,4 @@
-class TimesheetsController < ApplicationController
+class Api::V1::TimesheetsController < ApplicationController
   before_action :set_timesheet, only: [:show, :update, :destroy]
 
   # GET /timesheets
@@ -39,13 +39,14 @@ class TimesheetsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_timesheet
-      @timesheet = Timesheet.find(params[:id])
-    end
 
-    # Only allow a trusted parameter "white list" through.
-    def timesheet_params
-      params.fetch(:timesheet, {})
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_timesheet
+    @timesheet = Timesheet.find(params[:id])
+  end
+
+  # Only allow a trusted parameter "white list" through.
+  def timesheet_params
+    params.fetch(:timesheet, {})
+  end
 end

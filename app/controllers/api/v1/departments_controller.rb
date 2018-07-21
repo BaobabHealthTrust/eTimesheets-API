@@ -1,4 +1,4 @@
-class DepartmentsController < ApplicationController
+class Api::V1::DepartmentsController < ApplicationController
   before_action :set_department, only: [:show, :update, :destroy]
 
   # GET /departments
@@ -39,13 +39,14 @@ class DepartmentsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_department
-      @department = Department.find(params[:id])
-    end
 
-    # Only allow a trusted parameter "white list" through.
-    def department_params
-      params.fetch(:department, {})
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_department
+    @department = Department.find(params[:id])
+  end
+
+  # Only allow a trusted parameter "white list" through.
+  def department_params
+    params.fetch(:department, {})
+  end
 end

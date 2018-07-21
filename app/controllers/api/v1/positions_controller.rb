@@ -1,4 +1,4 @@
-class PositionsController < ApplicationController
+class Api::V1::PositionsController < ApplicationController
   before_action :set_position, only: [:show, :update, :destroy]
 
   # GET /positions
@@ -39,13 +39,14 @@ class PositionsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_position
-      @position = Position.find(params[:id])
-    end
 
-    # Only allow a trusted parameter "white list" through.
-    def position_params
-      params.fetch(:position, {})
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_position
+    @position = Position.find(params[:id])
+  end
+
+  # Only allow a trusted parameter "white list" through.
+  def position_params
+    params.fetch(:position, {})
+  end
 end
