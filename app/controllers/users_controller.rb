@@ -1,5 +1,9 @@
 class UsersController < ApplicationController
-  before_action :set_user, only: [:show, :update, :destroy]
+	skip_before_action :authenticate_request, only: %i[login]
+
+	def login
+		authenticate params[:email], params[:password]
+	end
 
   # GET /users
   def index
@@ -38,14 +42,34 @@ class UsersController < ApplicationController
     @user.destroy
   end
 
-  private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_user
-      @user = User.find(params[:id])
+  def verify_token
+    token_status = HashWithIndifferentAccess.new(JWT.decode(params[:token], 
+      Rails.application.secrets.secret_key_base)[0]
+    ) rescue []
+    if token_status.blank?
+      message = {status: 401, message: "Failed"}
+    else
+      message = {status: 200, message: "Successful"}
     end
+    render plain: message.to_json
+  end
+  
+	private
 
-    # Only allow a trusted parameter "white list" through.
-    def user_params
-      params.fetch(:user, {})
-    end
+	def user_params
+		params.permit(:email, :password)
+	end
+
+	def authenticate(email, password)
+		command = AuthenticateUser.call(email, password)
+
+		if command.success?
+			render json: {
+				access_token: command.result,
+				message: 'Login Successful'
+			}
+		else
+			render json: { error: command.errors }, status: :unauthorized
+		end
+	end
 end
