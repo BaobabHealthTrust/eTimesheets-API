@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_07_21_141454) do
+ActiveRecord::Schema.define(version: 2018_07_21_144236) do
 
   create_table "departments", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name", null: false
@@ -90,7 +90,7 @@ ActiveRecord::Schema.define(version: 2018_07_21_141454) do
     t.integer "timesheet_id", null: false
     t.integer "project_id", null: false
     t.datetime "start_time", null: false
-    t.datetime "endtime", null: false
+    t.datetime "end_time", null: false
     t.text "description", null: false
     t.boolean "voided", default: false
     t.string "voided_reason"

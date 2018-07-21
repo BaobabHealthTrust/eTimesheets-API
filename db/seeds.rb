@@ -69,7 +69,7 @@ roles.each do |name, description|
 end
 
 user = User.create(
-  email: "admin@baobabhealth.com",
+  email: "admin@baobabhealth.org",
   password: "test",
   roles: [Role.find_by_name("admin")],
 )
@@ -84,4 +84,4 @@ employee = Employee.create(
 
 puts employee.errors.to_json
 
-puts "Your new user is: admin@baobabhealth.com, password: test"
+puts "Your new user is: admin@baobabhealth.org, password: test"
