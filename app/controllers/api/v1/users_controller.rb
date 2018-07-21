@@ -63,9 +63,11 @@ class Api::V1::UsersController < ApplicationController
     command = AuthenticateUser.call(email, password)
 
     if command.success?
+      user = User.find_by_email(email)
       render json: {
                access_token: command.result,
                message: "Login Successful",
+               user: user,
              }
     else
       render json: {error: command.errors}, status: :unauthorized
